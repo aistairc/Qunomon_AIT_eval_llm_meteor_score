@@ -1,0 +1,66 @@
+{
+  "name": "eval_llm_meteor_score",
+  "description": "LLMモデルで翻訳タスクを実行し、生成された翻訳テキストの品質をMETEORスコアで評価します。このスコアを使用して、翻訳の品質を数値化し、モデル性能を測定します。",
+  "source_repository": "https://github.com/aistairc/Qunomon_AIT_eval_llm_meteor_score",
+  "version": "1.0",
+  "quality": "https://ait-hub.pj.aist.go.jp/ait-hub/api/0.0.1/qualityDimensions/機械学習品質マネジメントガイドライン第三版/C-1機械学習モデルの正確性",
+  "keywords": [
+    "LLM",
+    "METEOR"
+  ],
+  "references": [],
+  "licenses": [
+    "Apache License Version 2.0"
+  ],
+  "inventories": [
+    {
+      "name": "translate_data",
+      "type": "dataset",
+      "description": "原文と翻訳のデータセット \nJSON形式{inputs:array, references:array}\n例：{inputs: [MLflow is an open-source platform for managing the end-to-end machine learning (ML) lifecycle.], references: [MLflow est une plateforme open-source pour la gestion du cycle de vie complet.]}",
+      "requirement": {
+        "format": [
+          "json"
+        ]
+      }
+    },
+    {
+      "name": "llm_model_dir",
+      "type": "model",
+      "description": "事前にトレーニング済みの大規模言語モデルと、そのモデルの設定ファイルを保存したディレクトリ\n 例:T5, GPT-3\n モデルファイルは、config.json, model.safetensors, generation_config.json, special_tokens_map.json, tokenizer_config.json, tokenizer.jsonを含む",
+      "requirement": {
+        "format": [
+          "ALL"
+        ]
+      }
+    }
+  ],
+  "parameters": [],
+  "report": {
+    "measures": [
+      {
+        "name": "METEOR_Score",
+        "type": "float",
+        "description": "計算されたMETEORスコア",
+        "structure": "single",
+        "min": "0"
+      }
+    ],
+    "resources": [
+      {
+        "name": "meteor_score_table",
+        "type": "table",
+        "description": "METEORスコアが最も低い10セットのデータサンプル"
+      }
+    ]
+  },
+  "downloads": [
+    {
+      "name": "Log",
+      "description": "AIT実行ログ"
+    },
+    {
+      "name": "meteor_table",
+      "description": "Meteor評価結果CSV。以下の項目を含む\n inputs:原文テキスト\n references:参照翻訳テキスト\n predictions:モデルで生成した訳分\n METEORスコア"
+    }
+  ]
+}
